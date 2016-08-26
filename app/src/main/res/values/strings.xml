@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">LockscreenDayCountdown</string>
+    <string name="Details">Details</string>
+    <string name="Date">Date</string>
+    <string name="gate_2017">GATE 2017</string>
+    <string name="temporaryno">167</string>
+    <string name="Today">Today</string>
+    <string name="from_calendar">From Calendar</string>
+    <string name="Title">Title</string>
+    <string name="what_is_on_that_day_optional">What is on that day? (Optional)</string>
+    <string name="show_title_in_widget">Show title in widget</string>
+    <string name="Color">Color</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
+    <string name="title_activity_reposition">Reposition Widget</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>
