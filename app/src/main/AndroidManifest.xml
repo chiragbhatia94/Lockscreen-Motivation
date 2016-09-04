@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,16 +23,34 @@
 
         <service android:name=".LockScreenPhoneService" />
 
-        <activity android:name=".CreateDayCountdown" />
         <activity
-            android:name=".RepositionActivity"
+            android:name=".CreateDayCountdown"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.urhive.lockscreendaycountdown.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_reposition"
             android:parentActivityName=".CreateDayCountdown"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/AppThemeFullscreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.urhive.lockscreendaycountdown.CreateDayCountdown" />
+        </activity>
+        <activity
+            android:name=".RepositionTextActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Repostion Text"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeFullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.urhive.lockscreendaycountdown.MainActivity" />
         </activity>
     </application>
 

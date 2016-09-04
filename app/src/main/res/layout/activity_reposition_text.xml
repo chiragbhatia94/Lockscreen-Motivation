@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullscreen_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.urhive.lockscreendaycountdown.RepositionTextActivity">
+
+    <ImageView
+        android:id="@+id/applyWallpaperIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/change_background"
+        android:onClick="applyWallpaper"
+        android:padding="10dp"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:tint="@color/white"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/applyWallpaperIcon"
+        android:contentDescription="@string/change_background"
+        android:onClick="changeOrientation"
+        android:padding="10dp"
+        android:src="@drawable/ic_screen_rotation_black_24dp"
+        android:tint="@color/white"
+        tools:ignore="RtlHardcoded" />
+
+    <RelativeLayout
+        android:id="@+id/widgetRL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        tools:ignore="RelativeOverlap">
+
+        <TextView
+            android:id="@+id/mainTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="This is gold!"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/doneReposition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="done"
+        android:padding="15dp"
+        android:text="@string/done"
+        android:textColor="@color/white" />
+</RelativeLayout>

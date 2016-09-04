@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">LockscreenDayCountdown</string>
+    <string name="app_name">Lockscreen Day Countdown</string>
     <string name="Details">Details</string>
     <string name="Date">Date</string>
-    <string name="gate_2017">GATE 2017</string>
-    <string name="temporaryno">167</string>
+    <string name="gate_2017"></string>
+    <string name="temporaryno">0</string>
     <string name="Today">Today</string>
     <string name="from_calendar">From Calendar</string>
     <string name="Title">Title</string>
@@ -21,4 +21,14 @@
     <string name="title_activity_reposition">Reposition Widget</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="pick_color">Pick Color</string>
+    <string name="shade">Shade</string>
+    <string name="done">Done</string>
+    <string name="change_background">Change Background</string>
+    <string name="day_countdown_on_lockscreen">Day Countdown On Lockscreen</string>
+    <string name="edit_widget">Edit Widget</string>
+    <string name="show_on_lock_screen">Show on lock screen</string>
+    <string name="setup_widget">Setup Widget</string>
+    <string name="position_text_on_lockscreen">Position Text On Lockscreen</string>
+    <string name="lockscreen_text">Lockscreen Text</string>
 </resources>

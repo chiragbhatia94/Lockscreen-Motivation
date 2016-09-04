@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LockscreenDayCountdown.iml" filepath="$PROJECT_DIR$/LockscreenDayCountdown.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProgressWheel/ProgressWheel.iml" filepath="$PROJECT_DIR$/ProgressWheel/ProgressWheel.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

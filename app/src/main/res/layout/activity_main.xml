@@ -1,16 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.urhive.lockscreendaycountdown.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        
-    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/daycountdownheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/day_countdown_on_lockscreen"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/daycountdownheading"
+                android:layout_centerInParent="true">
+
+                <RelativeLayout
+                    android:id="@+id/heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <com.todddavies.components.progressbar.ProgressWheel
+                        android:id="@+id/countdownPW"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        app:pwBarColor="@color/defaultPWBarColor"
+                        app:pwBarLength="60dp"
+                        app:pwBarWidth="5dp"
+                        app:pwRimColor="@color/grey_500"
+                        app:pwRimWidth="2dp"
+                        app:pwText="@string/temporaryno"
+                        app:pwTextColor="@color/white"
+                        app:pwTextSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/textPW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/countdownPW"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/gate_2017"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/heading"
+                    android:layout_toRightOf="@id/heading"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/editCountdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="editWidget"
+                        android:text="@string/edit_widget"
+                        android:textAllCaps="false" />
+
+                    <CheckBox
+                        android:id="@+id/widgetShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:onClick="setWidgetVisibility"
+                        android:text="@string/show_on_lock_screen"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lockscreenTextHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout"
+                android:layout_centerHorizontal="true"
+                android:text="@string/lockscreen_text"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutLockScreenText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lockscreenTextHeading"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <EditText
+                    android:id="@+id/lockscreenTextET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Hello World!"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/grey_600" />
+
+                <Button
+                    android:id="@+id/positionLockscreentextbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lockscreenTextET"
+                    android:layout_centerHorizontal="true"
+                    android:onClick="repositionText"
+                    android:text="@string/position_text_on_lockscreen"
+                    android:textAllCaps="false" />
+
+                <CheckBox
+                    android:id="@+id/textShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/positionLockscreentextbutton"
+                    android:layout_centerHorizontal="true"
+                    android:checked="true"
+                    android:onClick="setTextVisibility"
+                    android:text="@string/show_on_lock_screen"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -18,6 +150,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_white" />
+        android:src="@drawable/ic_autorenew_black_24dp"
+        android:tint="@color/white" />
 
 </android.support.design.widget.CoordinatorLayout>
