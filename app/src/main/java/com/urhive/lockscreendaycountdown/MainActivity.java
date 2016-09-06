@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public final static int REQUEST_CODE = 128;
     protected String TAG = "MainActivity";
     TextView textPW;
-    CheckBox widgetShowCB, textShowCB;
+    CheckBox widgetShowCB, textShowCB, quoteShowCB;
     EditText lockscreenTextET;
     ProgressWheel pw;
     SharedPreferences sharedPreferences;
@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         */
 
         Boolean firstRun = sharedPreferences.getBoolean("firstRun", true);
+
+        /**Intent intentIntro = new Intent(MainActivity.this, LDCIntro.class);
+         startActivity(intentIntro);*/
 
         if (firstRun) {
             sharedPreferences.edit().putBoolean("firstRun", false).apply();
@@ -100,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
         textShowCB = (CheckBox) findViewById(R.id.textShow);
         if (sharedPreferences.getInt("textShow", View.VISIBLE) != View.VISIBLE) {
             textShowCB.setChecked(false);
+        }
+
+        quoteShowCB = (CheckBox) findViewById(R.id.quoteShow);
+        if (sharedPreferences.getInt("quoteShow", View.VISIBLE) != View.VISIBLE) {
+            quoteShowCB.setChecked(false);
         }
 
         /*
@@ -196,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // settings visibility of widget, text & quote
+
     public void setWidgetVisibility(View view) {
         CheckBox cb = (CheckBox) view;
         if (cb.isChecked()) {
@@ -216,20 +226,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             sharedPreferences.edit().putInt("textShow", View.GONE).apply();
         }
+
         Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
         stopService(intent);
         startService(intent);
-    }
-
-    public void repositionText(View view) {
-        if (lockscreenTextET.getText().toString().isEmpty()) {
-            Toast.makeText(MainActivity.this, "Enter some text to reposition!", Toast.LENGTH_SHORT).show();
-        } else {
-            Intent intent = new Intent(MainActivity.this, RepositionTextActivity.class);
-            intent.putExtra("color", sharedPreferences.getInt("textColor", Color.WHITE));
-            intent.putExtra("size", sharedPreferences.getInt("textSize", 24));
-            startActivity(intent);
-        }
     }
 
     public void setQuoteVisibility(View view) {
@@ -243,6 +243,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
         stopService(intent);
         startService(intent);
+    }
+
+    // reposition text & quote
+    public void repositionText(View view) {
+        if (lockscreenTextET.getText().toString().isEmpty()) {
+            Toast.makeText(MainActivity.this, "Enter some text to reposition!", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(MainActivity.this, RepositionTextActivity.class);
+            intent.putExtra("color", sharedPreferences.getInt("textColor", Color.WHITE));
+            intent.putExtra("size", sharedPreferences.getInt("textSize", 24));
+            startActivity(intent);
+        }
     }
 
     public void repositionQuote(View view) {

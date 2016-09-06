@@ -23,9 +23,9 @@ public class LDCIntro extends AppIntro2 {
                 getString(R.string.app_description), R.drawable.intro1, ContextCompat.getColor(getApplicationContext(), R.color.blue_grey_500)));
 
         addSlide(AppIntro2Fragment.newInstance("Define a Goal", "Set a goal date!\nGet! Set! Go!", R.drawable.intro2, ContextCompat.getColor(getApplicationContext(), R.color.blue_grey_500)));
-        addSlide(AppIntro2Fragment.newInstance("Quote", "See a new quote everytime you check your phone!", R.drawable.intro3, ContextCompat.getColor(getApplicationContext(), R.color.blue_grey_500)));
-        addSlide(AppIntro2Fragment.newInstance("Show Custom Text on Lockscreen", "Want to add something other than \nowner's info to the lockscreen!", R.drawable.intro3, ContextCompat.getColor(getApplicationContext(), R.color.blue_grey_500)));
-        addSlide(AppIntro2Fragment.newInstance("Fly", "All the best for your awesome journey!", R.drawable.intro4, ContextCompat.getColor(getApplicationContext(), R.color.blue_grey_500)));
+        addSlide(AppIntro2Fragment.newInstance("Quote", "See a new quote everytime you check your phone!", R.drawable.intro3, ContextCompat.getColor(getApplicationContext(), R.color.blue_500)));
+        addSlide(AppIntro2Fragment.newInstance("Show Custom Text on Lockscreen", "Want to add something other than \nowner's info to the lockscreen!", R.drawable.intro3, ContextCompat.getColor(getApplicationContext(), R.color.grey_700)));
+        addSlide(AppIntro2Fragment.newInstance("Fly", "All the best for your awesome journey!", R.drawable.intro4, ContextCompat.getColor(getApplicationContext(), R.color.grey_400)));
     }
 
     @Override

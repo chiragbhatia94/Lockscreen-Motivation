@@ -17,7 +17,6 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class LockScreenPhoneService extends Service {
 
     static int width;
     WindowManager.LayoutParams params;
-    RelativeLayout topmostRL;
+    // RelativeLayout topmostRL;
     SharedPreferences sharedPreferences;
     String quote[] = new String[5];
     TextView quoteView, authorView;
@@ -64,7 +63,7 @@ public class LockScreenPhoneService extends Service {
 
         view = inf.inflate(R.layout.lockscreen_dialog, null);
 
-        topmostRL = (RelativeLayout) view.findViewById(R.id.topmostRL);
+        /*topmostRL = (RelativeLayout) view.findViewById(R.id.topmostRL);
 
         topmostRL.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -72,7 +71,7 @@ public class LockScreenPhoneService extends Service {
                 Log.i("WOw", "onTouch: this is awesome!");
                 return false;
             }
-        });
+        });*/
 
         RelativeLayout.LayoutParams widgetRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout.LayoutParams textRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -114,7 +113,6 @@ public class LockScreenPhoneService extends Service {
         if (sharedPreferences.getInt("quoteShow", View.VISIBLE) == View.VISIBLE) {
             quoteView = (TextView) view.findViewById(R.id.mainTV);
             authorView = (TextView) view.findViewById(R.id.authorTV);
-
 
             quote = DBHelper.getRandomQuote(getApplicationContext());
 
@@ -238,8 +236,6 @@ public class LockScreenPhoneService extends Service {
         filter.addAction(Intent.ACTION_USER_PRESENT);
 
         registerReceiver(mReceiver, filter);
-
-
     }
 
     @Override
@@ -271,9 +267,11 @@ public class LockScreenPhoneService extends Service {
                 if (!isShowing) {
                     windowManager.addView(view, params);
                     isShowing = true;
-                    quote = DBHelper.getRandomQuote(getApplicationContext());
-                    quoteView.setText(quote[3]);
-                    authorView.setText(quote[1]);
+                    if (sharedPreferences.getInt("quoteShow", View.VISIBLE) == View.VISIBLE) {
+                        quote = DBHelper.getRandomQuote(getApplicationContext());
+                        quoteView.setText(quote[3]);
+                        authorView.setText(quote[1]);
+                    }
                 }
             } else {
                 Log.i("Device is", "onReceive: unlocked");//it is not locked
