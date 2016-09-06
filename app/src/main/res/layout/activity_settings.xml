@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.urhive.lockscreendaycountdown.SettingsActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:clickable="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="48dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quotation Frequency"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/quotationFrequencyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change quotation on every screen lock!"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/quotationSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                android:paddingRight="16dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:clickable="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="48dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colors custom text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/customText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Size = 16 and Color = WHITE"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

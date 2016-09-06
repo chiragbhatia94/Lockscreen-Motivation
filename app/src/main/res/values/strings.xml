@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Lockscreen Day Countdown</string>
+    <string name="app_name">Lockscreen Motivation</string>
     <string name="Details">Details</string>
     <string name="Date">Date</string>
-    <string name="gate_2017"></string>
+    <string name="gate_2017"> </string>
     <string name="temporaryno">0</string>
     <string name="Today">Today</string>
     <string name="from_calendar">From Calendar</string>
@@ -31,4 +31,12 @@
     <string name="setup_widget">Setup Widget</string>
     <string name="position_text_on_lockscreen">Position Text On Lockscreen</string>
     <string name="lockscreen_text">Lockscreen Text</string>
+    <string name="position_quote_on_lockscreen">Position Quote On Lockscreen</string>
+    <string name="show_quote_on_lockscreen">Show Quote On Lockscreen</string>
+    <string name="show_a_new_quote_on_lockscreen_neach_time_you_see_lockscreen">Show a new quote on lockscreen \neach time you see lockscreen!</string>
+    <string name="anonymous">- Anonymous</string>
+    <string name="fall_seven_times_stand_up_eight">Fall seven times, stand up eight!</string>
+    <string name="intro">Welcome to LockMotivation</string>
+    <string name="app_description">Get motivated every time\nyou check your phone!</string>
+    <string name="settings">Settings</string>
 </resources>

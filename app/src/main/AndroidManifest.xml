@@ -4,6 +4,7 @@
     package="com.urhive.lockscreendaycountdown">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApplication"
@@ -22,6 +23,16 @@
         </activity>
 
         <service android:name=".LockScreenPhoneService" />
+
+        <!--
+        <service android:name=".LockScreenTouchService" />
+        -->
+        <receiver android:name=".BootReciever">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".CreateDayCountdown"
@@ -52,6 +63,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.urhive.lockscreendaycountdown.MainActivity" />
         </activity>
+        <activity
+            android:name=".RepositionQuoteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Repostion Quote"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeFullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.urhive.lockscreendaycountdown.MainActivity" />
+        </activity>
+        <activity android:name=".LDCIntro" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

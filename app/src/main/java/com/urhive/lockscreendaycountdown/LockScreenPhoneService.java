@@ -1,5 +1,6 @@
 package com.urhive.lockscreendaycountdown;
 
+import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,9 +11,13 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +32,12 @@ import com.todddavies.components.progressbar.ProgressWheel;
  */
 public class LockScreenPhoneService extends Service {
 
+    static int width;
     WindowManager.LayoutParams params;
+    RelativeLayout topmostRL;
     SharedPreferences sharedPreferences;
+    String quote[] = new String[5];
+    TextView quoteView, authorView;
     private BroadcastReceiver mReceiver;
     private boolean isShowing = false;
     private WindowManager windowManager;
@@ -44,24 +53,42 @@ public class LockScreenPhoneService extends Service {
         super.onCreate();
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        width = metrics.widthPixels - 100;
+
         LayoutInflater inf = LayoutInflater.from(getApplicationContext());
         sharedPreferences = getSharedPreferences("com.urhive.lockscreendaycountdown", MODE_PRIVATE);
 
         view = inf.inflate(R.layout.lockscreen_dialog, null);
 
+        topmostRL = (RelativeLayout) view.findViewById(R.id.topmostRL);
+
+        topmostRL.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("WOw", "onTouch: this is awesome!");
+                return false;
+            }
+        });
+
         RelativeLayout.LayoutParams widgetRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout.LayoutParams textRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams quoteRLParams = new RelativeLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        RelativeLayout textRL, widgetRL;
+        RelativeLayout textRL, widgetRL, quoteRL;
         textRL = (RelativeLayout) view.findViewById(R.id.textRL);
         widgetRL = (RelativeLayout) view.findViewById(R.id.heading);
+        quoteRL = (RelativeLayout) view.findViewById(R.id.quoteRL);
 
         if (sharedPreferences.getInt("textShow", View.VISIBLE) == View.VISIBLE) {
             TextView textView = (TextView) view.findViewById(R.id.textView);
             textView.setText(sharedPreferences.getString("lockscreenText", ""));
             // change later for picking up shared preference values
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sharedPreferences.getInt("textSize", 24));
+            textView.setTextColor(sharedPreferences.getInt("textColor", Color.WHITE));
 
             int TextPotraitPostion[] = {sharedPreferences.getInt("textPotraitX", 0),
                     sharedPreferences.getInt("textPotraitY", 0)};
@@ -82,6 +109,43 @@ public class LockScreenPhoneService extends Service {
             textRL.setLayoutParams(textRLParams);
         } else {
             textRL.setVisibility(View.GONE);
+        }
+
+        if (sharedPreferences.getInt("quoteShow", View.VISIBLE) == View.VISIBLE) {
+            quoteView = (TextView) view.findViewById(R.id.mainTV);
+            authorView = (TextView) view.findViewById(R.id.authorTV);
+
+
+            quote = DBHelper.getRandomQuote(getApplicationContext());
+
+            quoteView.setText(quote[3]);
+            authorView.setText(quote[1]);
+            // change later for picking up shared preference values
+            quoteView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sharedPreferences.getInt("quoteSize", 18));
+            quoteView.setTextColor(sharedPreferences.getInt("quoteColor", Color.WHITE));
+
+            authorView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sharedPreferences.getInt("authorSize", 16));
+            authorView.setTextColor(sharedPreferences.getInt("authorColor", Color.WHITE));
+
+            int QuotePotraitPostion[] = {sharedPreferences.getInt("quotePotraitX", 0),
+                    sharedPreferences.getInt("quotePotraitY", 0)};
+
+            int QuoteLandscapePostion[] = {sharedPreferences.getInt("quoteLandscapeX", 0),
+                    sharedPreferences.getInt("quoteLandscapeY", 0)};
+
+            //set parameters for the quoteview
+            if (windowManager.getDefaultDisplay().getRotation() == Surface.ROTATION_0
+                    || windowManager.getDefaultDisplay().getRotation() == Surface.ROTATION_180) {
+                quoteRLParams.leftMargin = QuotePotraitPostion[0];
+                quoteRLParams.topMargin = QuotePotraitPostion[1];
+            } else {
+                quoteRLParams.leftMargin = QuoteLandscapePostion[0];
+                quoteRLParams.topMargin = QuoteLandscapePostion[1];
+            }
+
+            quoteRL.setLayoutParams(quoteRLParams);
+        } else {
+            quoteRL.setVisibility(View.GONE);
         }
 
         if (sharedPreferences.getInt("widgetShow", View.VISIBLE) == View.VISIBLE) {
@@ -174,6 +238,8 @@ public class LockScreenPhoneService extends Service {
         filter.addAction(Intent.ACTION_USER_PRESENT);
 
         registerReceiver(mReceiver, filter);
+
+
     }
 
     @Override
@@ -199,19 +265,32 @@ public class LockScreenPhoneService extends Service {
     public class LockScreenStateReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                //if screen is turn off show the view
+            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (myKM.inKeyguardRestrictedInputMode()) {
+                Log.i("Device is", "onReceive: locked");//it is locked
                 if (!isShowing) {
                     windowManager.addView(view, params);
                     isShowing = true;
+                    quote = DBHelper.getRandomQuote(getApplicationContext());
+                    quoteView.setText(quote[3]);
+                    authorView.setText(quote[1]);
                 }
-            } else if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
-                //Handle resuming events if user is present/screen is unlocked remove the textview immediately
+            } else {
+                Log.i("Device is", "onReceive: unlocked");//it is not locked
                 if (isShowing) {
                     windowManager.removeViewImmediate(view);
                     isShowing = false;
                 }
             }
+
+            /*
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                //if screen is turn off show the view
+
+            } else if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
+                //Handle resuming events if user is present/screen is unlocked remove the textview immediately
+
+            }*/
         }
     }
 }

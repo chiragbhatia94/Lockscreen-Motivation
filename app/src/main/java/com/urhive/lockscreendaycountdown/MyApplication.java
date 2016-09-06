@@ -2,8 +2,6 @@ package com.urhive.lockscreendaycountdown;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
-
 /**
  * Created by Chirag Bhatia on 04-09-2016.
  */
@@ -11,7 +9,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
+
+        // Stetho.initializeWithDefaults(this);
     }
 
     @Override
