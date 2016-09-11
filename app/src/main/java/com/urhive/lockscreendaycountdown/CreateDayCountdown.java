@@ -378,9 +378,15 @@ public class CreateDayCountdown extends AppCompatActivity implements ColorChoose
 
             Toast.makeText(CreateDayCountdown.this, "Done!", Toast.LENGTH_SHORT).show();
 
-            Intent intentService = new Intent(CreateDayCountdown.this, LockScreenPhoneService.class);
-            stopService(intentService);
-            startService(intentService);
+            if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 0) {
+                Intent intentPhone = new Intent(CreateDayCountdown.this, LockScreenPhoneService.class);
+                stopService(intentPhone);
+                startService(intentPhone);
+            } else if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 1) {
+                Intent intentAfter = new Intent(CreateDayCountdown.this, LockscreenAfterUnlock.class);
+                stopService(intentAfter);
+                startService(intentAfter);
+            }
 
             Intent intent = new Intent(CreateDayCountdown.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

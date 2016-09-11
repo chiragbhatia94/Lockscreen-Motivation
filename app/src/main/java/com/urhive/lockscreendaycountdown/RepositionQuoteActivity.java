@@ -190,9 +190,15 @@ public class RepositionQuoteActivity extends AppCompatActivity {
         editor.putInt("quoteLandscapeY", landscapePosition[1]);
         editor.apply();
 
-        Intent intentService = new Intent(RepositionQuoteActivity.this, LockScreenPhoneService.class);
-        stopService(intentService);
-        startService(intentService);
+        if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 0) {
+            Intent intentPhone = new Intent(RepositionQuoteActivity.this, LockScreenPhoneService.class);
+            stopService(intentPhone);
+            startService(intentPhone);
+        } else if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 1) {
+            Intent intentAfter = new Intent(RepositionQuoteActivity.this, LockscreenAfterUnlock.class);
+            stopService(intentAfter);
+            startService(intentAfter);
+        }
 
         setResult(RESULT_OK, intent);
         finish();

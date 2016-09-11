@@ -1,6 +1,7 @@
 package com.urhive.lockscreendaycountdown;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -163,9 +164,15 @@ public class RepositionTextActivity extends AppCompatActivity {
         editor.putInt("textLandscapeY", landscapePosition[1]);
         editor.apply();
 
-        Intent intentService = new Intent(RepositionTextActivity.this, LockScreenPhoneService.class);
-        stopService(intentService);
-        startService(intentService);
+        if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 0) {
+            Intent intentPhone = new Intent(RepositionTextActivity.this, LockScreenPhoneService.class);
+            stopService(intentPhone);
+            startService(intentPhone);
+        } else if (getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE).getInt("showWhen", 0) == 1) {
+            Intent intentAfter = new Intent(RepositionTextActivity.this, LockscreenAfterUnlock.class);
+            stopService(intentAfter);
+            startService(intentAfter);
+        }
 
         setResult(RESULT_OK, intent);
         finish();
