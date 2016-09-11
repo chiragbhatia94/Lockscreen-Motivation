@@ -1,6 +1,9 @@
 package com.urhive.lockscreendaycountdown;
 
+<<<<<<< HEAD
 import android.annotation.SuppressLint;
+=======
+>>>>>>> origin/master
 import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -49,7 +52,10 @@ public class LockscreenAfterUnlock extends Service {
         return null;
     }
 
+<<<<<<< HEAD
     @SuppressLint("InflateParams")
+=======
+>>>>>>> origin/master
     @Override
     public void onCreate() {
         super.onCreate();
