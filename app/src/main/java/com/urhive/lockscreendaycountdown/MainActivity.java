@@ -49,14 +49,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = this.getSharedPreferences("com.urhive.lockscreendaycountdown", MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("com.urhive.lockscreendaycountdown",
+                MODE_PRIVATE);
 
         checkDrawOverlayPermission();
-
-        /* for later
-        Intent intentTouchService = new Intent(MainActivity.this, LockScreenTouchService.class);
-        startService(intentTouchService);
-        */
 
         Boolean firstRun = sharedPreferences.getBoolean("firstRun", true);
 
@@ -66,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         if (firstRun) {
             sharedPreferences.edit().putBoolean("firstRun", false).apply();
             sharedPreferences.edit().putInt("showWhen", 1).apply();
+            sharedPreferences.edit().putInt("toShow", 1).apply();
 
             Log.i(TAG, "firstRun: creating quotation database");
 
@@ -151,12 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sharedPreferences.edit().putString("lockscreenText", lockscreenTextET.getText().toString()).apply();
+                sharedPreferences.edit().putString("lockscreenText", lockscreenTextET.getText()
+                        .toString()).apply();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                // sharedPreferences.edit().putString("lockscreenText", lockscreenTextET.getText().toString()).apply();
+                // sharedPreferences.edit().putString("lockscreenText", lockscreenTextET.getText
+                // ().toString()).apply();
             }
         });
 
@@ -166,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (sharedPreferences.getInt("showWhen", 0) == 0) {
-                    Intent intentPhone = new Intent(MainActivity.this, LockScreenPhoneService.class);
+                    Intent intentPhone = new Intent(MainActivity.this, LockScreenPhoneService
+                            .class);
                     stopService(intentPhone);
                     startService(intentPhone);
                 } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
@@ -279,7 +279,8 @@ public class MainActivity extends AppCompatActivity {
     // reposition text & quote
     public void repositionText(View view) {
         if (lockscreenTextET.getText().toString().isEmpty()) {
-            Toast.makeText(MainActivity.this, "Enter some text to reposition!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Enter some text to reposition!", Toast
+                    .LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(MainActivity.this, RepositionTextActivity.class);
             intent.putExtra("color", sharedPreferences.getInt("textColor", Color.WHITE));
@@ -306,7 +307,8 @@ public class MainActivity extends AppCompatActivity {
             Drawable drawable = menu.getItem(i).getIcon();
             if (drawable != null) {
                 drawable.mutate();
-                drawable.setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+                drawable.setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.white),
+                 PorterDuff.Mode.SRC_ATOP);
             }
         }*/
         return super.onCreateOptionsMenu(menu);
@@ -334,6 +336,31 @@ public class MainActivity extends AppCompatActivity {
                 startService(intentAfter);
                 Toast.makeText(MainActivity.this, "After Lockscreen!", Toast.LENGTH_SHORT).show();
             }
+        } else if (id == R.id.action_off) {
+            // 1 to show 0 not to show
+            if (sharedPreferences.getInt("toShow", 1) == 0) {
+                sharedPreferences.edit().putInt("toShow", 1).apply();
+                if (sharedPreferences.getInt("showWhen", 0) == 0) {
+                    Intent intentPhone = new Intent(MainActivity.this, LockScreenPhoneService
+                            .class);
+                    stopService(intentPhone);
+                    startService(intentPhone);
+                } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+                    Intent intentAfter = new Intent(MainActivity.this, LockscreenAfterUnlock.class);
+                    stopService(intentAfter);
+                    startService(intentAfter);
+                }
+                Toast.makeText(this, "Show", Toast.LENGTH_SHORT).show();
+                item.setChecked(true);
+            } else if (sharedPreferences.getInt("toShow", 1) == 1) {
+                sharedPreferences.edit().putInt("toShow", 0).apply();
+                Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+                Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+                stopService(intentPhone);
+                stopService(intentAfter);
+                Toast.makeText(this, "Not Show", Toast.LENGTH_SHORT).show();
+                item.setChecked(false);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -345,13 +372,16 @@ public class MainActivity extends AppCompatActivity {
             if (!Settings.canDrawOverlays(this)) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(this)
                         .setTitle("Screen Overlay Permission Required!")
-                        .setMessage("Lockscreen Motivation app requires screen overlay permission for displaying" +
+                        .setMessage("Lockscreen Motivation app requires screen overlay permission" +
+                                " for displaying" +
                                 " data on lockscreen!")
-                        .setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Grant Permission", new DialogInterface
+                                .OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 /** if not construct intent to request permission */
-                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Intent intent = new Intent(Settings
+                                        .ACTION_MANAGE_OVERLAY_PERMISSION,
                                         Uri.parse("package:" + getPackageName()));
                                 /** request permission via start activity for result */
                                 startActivityForResult(intent, REQUEST_CODE);
@@ -373,7 +403,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Settings.canDrawOverlays(this)) {
                     // continue here - permission was granted
                     Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                            .FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }

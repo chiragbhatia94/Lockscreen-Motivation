@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topmostRL"
@@ -16,7 +17,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/temporaryno" />
+            android:text="@string/temporaryno"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -38,7 +39,7 @@
             app:pwRimWidth="2dp"
             app:pwText="@string/temporaryno"
             app:pwTextColor="@color/white"
-            app:pwTextSize="22sp" />
+            app:pwTextSize="22sp"/>
 
         <TextView
             android:id="@+id/textPW"
@@ -47,7 +48,7 @@
             android:layout_below="@id/countdownPW"
             android:layout_centerHorizontal="true"
             android:text="@string/gate_2017"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fall_seven_times_stand_up_eight"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/authorTV"
@@ -73,7 +74,7 @@
             android:layout_alignRight="@id/mainTV"
             android:layout_below="@id/mainTV"
             android:text="@string/anonymous"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
 </RelativeLayout>

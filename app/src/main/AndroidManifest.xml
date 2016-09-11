@@ -25,9 +25,6 @@
         <service android:name=".LockScreenPhoneService" />
         <service android:name=".LockscreenAfterUnlock" />
 
-        <!--
-        <service android:name=".LockScreenTouchService" />
-        -->
         <receiver android:name=".BootReciever">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

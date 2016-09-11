@@ -14,12 +14,15 @@ public class BootReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.urhive.lockscreendaycountdown", Context.MODE_PRIVATE);
         Intent serviceIntent = new Intent();
-        if (sharedPreferences.getInt("showWhen", 0) == 0) {
-            serviceIntent = new Intent(context, LockScreenPhoneService.class);
-        } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
-            serviceIntent = new Intent(context, LockscreenAfterUnlock.class);
+
+        if (sharedPreferences.getInt("toShow", 1) == 1) {
+            if (sharedPreferences.getInt("showWhen", 0) == 0) {
+                serviceIntent = new Intent(context, LockScreenPhoneService.class);
+            } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+                serviceIntent = new Intent(context, LockscreenAfterUnlock.class);
+            }
+            Log.i("BootReciver", "onReceive: ");
+            context.startService(serviceIntent);
         }
-        Log.i("BootReciver", "onReceive: ");
-        context.startService(serviceIntent);
     }
 }

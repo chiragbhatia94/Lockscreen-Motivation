@@ -222,6 +222,19 @@ public class LockscreenAfterUnlock extends Service {
             widgetRL.setVisibility(View.GONE);
         }
 
+        View.OnTouchListener touchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                windowManager.removeViewImmediate(view);
+                isShowing = false;
+                return false;
+            }
+        };
+
+        quoteRL.setOnTouchListener(touchListener);
+        widgetRL.setOnTouchListener(touchListener);
+        textRL.setOnTouchListener(touchListener);
+
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,

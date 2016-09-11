@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class LockScreenPhoneService extends Service {
 
     static int width;
     WindowManager.LayoutParams params;
-    // RelativeLayout topmostRL;
+    RelativeLayout topmostRL;
     SharedPreferences sharedPreferences;
     String quote[] = new String[5];
     TextView quoteView, authorView;
@@ -63,21 +64,12 @@ public class LockScreenPhoneService extends Service {
 
         view = inf.inflate(R.layout.lockscreen_dialog, null);
 
-        /*topmostRL = (RelativeLayout) view.findViewById(R.id.topmostRL);
-
-        topmostRL.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.i("WOw", "onTouch: this is awesome!");
-                return false;
-            }
-        });*/
-
         RelativeLayout.LayoutParams widgetRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout.LayoutParams textRLParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout.LayoutParams quoteRLParams = new RelativeLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         RelativeLayout textRL, widgetRL, quoteRL;
+        topmostRL = (RelativeLayout) view.findViewById(R.id.topmostRL);
         textRL = (RelativeLayout) view.findViewById(R.id.textRL);
         widgetRL = (RelativeLayout) view.findViewById(R.id.heading);
         quoteRL = (RelativeLayout) view.findViewById(R.id.quoteRL);
@@ -216,16 +208,36 @@ public class LockScreenPhoneService extends Service {
             widgetRL.setVisibility(View.GONE);
         }
 
+        // 05-03-2017 changing the version ! for accepting touch events on lock screen
+        // changing param type to type_system_error from type_system_overlay
+
+        View.OnTouchListener touchListner = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                windowManager.removeViewImmediate(view);
+                isShowing = false;
+
+                Log.i("Set Invisible", "onTouch: WOW!");
+                return false;
+            }
+        };
+
+        topmostRL.setOnTouchListener(touchListner);
+        widgetRL.setOnTouchListener(touchListner);
+        textRL.setOnTouchListener(touchListner);
+        quoteRL.setOnTouchListener(touchListner);
+
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 0, 0,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                         | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
                 PixelFormat.TRANSLUCENT);
+
 
         // params.gravity = Gravity.CENTER;
         params.gravity = Gravity.TOP | Gravity.START;

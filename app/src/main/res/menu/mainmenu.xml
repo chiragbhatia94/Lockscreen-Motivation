@@ -5,4 +5,10 @@
         android:id="@+id/action_show"
         android:title="Before/After Lockscreen"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_off"
+        android:checkable="true"
+        android:checked="true"
+        android:title="Show"
+        app:showAsAction="never"/>
 </menu>
