@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (firstRun) {
             sharedPreferences.edit().putBoolean("firstRun", false).apply();
+            sharedPreferences.edit().putInt("showWhen", 1).apply();
 
             Log.i(TAG, "firstRun: creating quotation database");
 
@@ -85,8 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(Arrays.toString(DBHelper.getRandomQuote(getApplicationContext(), 50)));
 
-        Intent intent = new Intent(this, LockScreenPhoneService.class);
-        startService(intent);
+
+        Intent serviceIntent = new Intent();
+        if (sharedPreferences.getInt("showWhen", 0) == 0) {
+            serviceIntent = new Intent(this, LockScreenPhoneService.class);
+        } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+            serviceIntent = new Intent(this, LockscreenAfterUnlock.class);
+        }
+        startService(serviceIntent);
 
         textPW = (TextView) findViewById(R.id.textPW);
 
@@ -158,9 +165,15 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
-                stopService(intent);
-                startService(intent);
+                if (sharedPreferences.getInt("showWhen", 0) == 0) {
+                    Intent intentPhone = new Intent(MainActivity.this, LockScreenPhoneService.class);
+                    stopService(intentPhone);
+                    startService(intentPhone);
+                } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+                    Intent intentAfter = new Intent(MainActivity.this, LockscreenAfterUnlock.class);
+                    stopService(intentAfter);
+                    startService(intentAfter);
+                }
 
                 Toast.makeText(MainActivity.this, "Service Restarted!", Toast.LENGTH_SHORT).show();
             }
@@ -214,9 +227,15 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putInt("widgetShow", View.GONE).apply();
         }
 
-        Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
-        stopService(intent);
-        startService(intent);
+        if (sharedPreferences.getInt("showWhen", 0) == 0) {
+            Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+            stopService(intentPhone);
+            startService(intentPhone);
+        } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+            Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+            stopService(intentAfter);
+            startService(intentAfter);
+        }
     }
 
     public void setTextVisibility(View view) {
@@ -227,9 +246,15 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putInt("textShow", View.GONE).apply();
         }
 
-        Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
-        stopService(intent);
-        startService(intent);
+        if (sharedPreferences.getInt("showWhen", 0) == 0) {
+            Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+            stopService(intentPhone);
+            startService(intentPhone);
+        } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+            Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+            stopService(intentAfter);
+            startService(intentAfter);
+        }
     }
 
     public void setQuoteVisibility(View view) {
@@ -240,9 +265,15 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putInt("quoteShow", View.GONE).apply();
         }
 
-        Intent intent = new Intent(MainActivity.this, LockScreenPhoneService.class);
-        stopService(intent);
-        startService(intent);
+        if (sharedPreferences.getInt("showWhen", 0) == 0) {
+            Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+            stopService(intentPhone);
+            startService(intentPhone);
+        } else if (sharedPreferences.getInt("showWhen", 0) == 1) {
+            Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+            stopService(intentAfter);
+            startService(intentAfter);
+        }
     }
 
     // reposition text & quote
@@ -269,8 +300,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /*
         getMenuInflater().inflate(R.menu.mainmenu, menu);
+        /*
         for (int i = 0; i < menu.size(); i++) {
             Drawable drawable = menu.getItem(i).getIcon();
             if (drawable != null) {
@@ -286,10 +317,23 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_done) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
+        if (id == R.id.action_show) {
+            // 0 on lockscreen 1 after
+            if (sharedPreferences.getInt("showWhen", 0) == 1) {
+                sharedPreferences.edit().putInt("showWhen", 0).apply();
+                Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+                Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+                stopService(intentAfter);
+                startService(intentPhone);
+                Toast.makeText(MainActivity.this, "On Lockscreen!", Toast.LENGTH_SHORT).show();
+            } else if (sharedPreferences.getInt("showWhen", 0) == 0) {
+                sharedPreferences.edit().putInt("showWhen", 1).apply();
+                Intent intentPhone = new Intent(this, LockScreenPhoneService.class);
+                Intent intentAfter = new Intent(this, LockscreenAfterUnlock.class);
+                stopService(intentPhone);
+                startService(intentAfter);
+                Toast.makeText(MainActivity.this, "After Lockscreen!", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);

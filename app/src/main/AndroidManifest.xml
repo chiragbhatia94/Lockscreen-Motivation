@@ -23,6 +23,7 @@
         </activity>
 
         <service android:name=".LockScreenPhoneService" />
+        <service android:name=".LockscreenAfterUnlock" />
 
         <!--
         <service android:name=".LockScreenTouchService" />

@@ -347,4 +347,6 @@
     <color name="black_overlay">#66000000</color>
 
     <color name="defaultPWBarColor">#1E88E5</color>
+
+    <color name="transparentBackground">#73000000</color>
 </resources>
