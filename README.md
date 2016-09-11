@@ -3,7 +3,6 @@ Get motivated every time you check your phone! First in class lock screen motiva
 
 <p align="center">
 <a href="https://play.google.com/store/apps/details?id=com.urhive.lockscreendaycountdown"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" height="75px"/></a>
-<a href=""><img alt="Git if on F-Droid" src="http://i.imgur.com/baSPE7X.png" height="75px"/></a>
 </p>
 
 ## Features
@@ -33,7 +32,7 @@ urhive.com@gmail.com.
 
 ## Installing
 
-The easiest way to install Loop is through the [Google Play Store][playstore] or [F-Droid][fdroid].
+The easiest way to install Loop is through the [Google Play Store][playstore].
 
 ## Contributing
 
@@ -76,5 +75,4 @@ Lockscreen Motivation is an open source project. If you would like to contribute
 [screen8th]: Screenshots/thumbs/8.jpg
 [poedit]: https://poeditor.com/join/project/pdutK4MtRW
 [playstore]: https://play.google.com/store/apps/details?id=com.urhive.lockscreendaycountdown
-[fdroid]: 
 [beta]: https://play.google.com/apps/testing/com.urhive.lockscreendaycountdown
