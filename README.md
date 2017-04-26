@@ -32,7 +32,7 @@ urhive.com@gmail.com.
 
 ## Installing
 
-The easiest way to install Loop is through the [Google Play Store][playstore].
+The easiest way to install Lockscreen Motivation is through the [Google Play Store][playstore].
 
 ## Contributing
 
